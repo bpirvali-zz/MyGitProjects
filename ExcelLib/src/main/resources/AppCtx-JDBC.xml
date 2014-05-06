@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
+	
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=MyDatabase" />
+        S2-Install-End:
+        <property name="username" value="Stefana\Steffi" />
+        S2-Install-Start: INSERT DB PASSWORD HERE
+        <property name="password" value="" />
+        S2-Install-End:
+    </bean>	
+    
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver"/>
+	    <property name="url" value="jdbc:jtds:sqlserver://MS_SERVER/ms_db;domain=myDomain;integrated security=false"/>
+	    <property name="username" value="myUser"/>
+	    <property name="password" value="myPassword"/>
+	</bean>    
+	-->
+	<!-- 
+	<bean id="dataSource" class="${jdbc.pool}" destroy-method="${jdbc.destroy}">
+	-->
+	<bean id="dataSource" class="${jdbc.pool}">
+		<constructor-arg>
+			<bean class="${jdbc.driver}">
+				<property name="URL" value="${jdbc.url}" />
+				<property name="user" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="npJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg name="dataSource" ref="dataSource" />
+	</bean>
+</beans>
