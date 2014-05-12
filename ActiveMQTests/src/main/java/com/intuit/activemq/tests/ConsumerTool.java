@@ -42,7 +42,7 @@ import org.apache.activemq.protobuf.compiler.CommandLineSupport;
 
 /**
  * A simple tool for consuming messages
- * 
+ * --ack-mode=CLIENT_ACKNOWLEDGE OR --transacted
  * 
  */
 public class ConsumerTool extends Thread implements MessageListener, ExceptionListener {
@@ -65,7 +65,8 @@ public class ConsumerTool extends Thread implements MessageListener, ExceptionLi
     private boolean transacted;
     private boolean durable;
     private String clientId;
-    private int ackMode = Session.AUTO_ACKNOWLEDGE;
+    //private int ackMode = Session.AUTO_ACKNOWLEDGE;
+    private int ackMode = Session.CLIENT_ACKNOWLEDGE;
     private String consumerName = "James";
     private long sleepTime;
     private long start;
@@ -139,6 +140,7 @@ public class ConsumerTool extends Thread implements MessageListener, ExceptionLi
             if (durable && clientId != null && clientId.length() > 0 && !"null".equals(clientId)) {
                 connection.setClientID(clientId);
             }
+            
             connection.setExceptionListener(this);
             connection.start();
 
