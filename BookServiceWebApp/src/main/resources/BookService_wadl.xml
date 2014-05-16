@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:prefix1="http://bp.com/bs">
+	<grammars>
+		<include href="BookService.xsd"/>
+	</grammars>
+	<resources base="http://localhost:8080/bs/rest">
+		<resource path="/books" id="com.bp.bs.BookResource" >
+			<method name="POST" id="add" >
+				<request>
+					<representation mediaType="application/xml" element="prefix1:book" />
+				</request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+			<resource path="/{isbn}">
+				<param name="isbn" style="template" type="xs:string" />
+				<method name="DELETE" id="delete">
+					<request />
+					<response>
+						<representation mediaType="application/octet-stream" />
+					</response>
+				</method>
+				<method name="GET" id="get" >
+					<request />
+					<response>
+						<representation mediaType="application/xml" element="prefix1:book" />
+					</response>
+				</method>
+				<method name="PUT" id="update" >
+					<request>
+						<representation mediaType="application/xml" element="prefix1:book" />
+					</request>
+					<response>
+						<representation mediaType="application/octet-stream" />
+					</response>
+				</method>
+			</resource>
+		</resource>
+	</resources>
+</application>

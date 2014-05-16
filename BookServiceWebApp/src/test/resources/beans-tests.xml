@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+>
+
+	<context:component-scan base-package="com.bp.bs"/>
+	<context:property-placeholder location="classpath:/BookServiceWebApp-tests.properties" />
+	
+	<bean id="SequentialAddresses" class="org.apache.cxf.clustering.SequentialStrategy">
+		<property name="alternateAddresses">
+			<list>
+				<value>http://${node.primary}/bs/rest</value>
+				<value>http://${node.secondary}/bs/rest</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="failover1" class="org.apache.cxf.clustering.FailoverFeature">
+		<property name="strategy" ref="SequentialAddresses" />
+	</bean>
+
+	<bean id="clientFacBean" class="org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean">		 
+		<property name="address" value="http://${node.primary}/bs/rest" />
+		<property name="features">
+			<list  value-type="org.apache.cxf.feature.AbstractFeature">
+			    <ref bean="failover1" />
+			</list>
+		</property>
+ 	</bean>
+	<bean id="client" factory-bean="clientFacBean" factory-method="createWebClient"/>
+	<bean id="cfg" class="com.bp.bs.Config" >
+		<property name="testFailover" value="true"/>
+	</bean>
+</beans>
+
+
