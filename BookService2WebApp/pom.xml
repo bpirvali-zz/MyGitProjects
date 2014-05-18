@@ -5,6 +5,9 @@
 	<artifactId>BookService2WebApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	<properties>
+		<cxf.version>2.2.3</cxf.version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -14,16 +17,13 @@
 				<configuration>
 					<verbose>true</verbose>
 					<fork>true</fork>
-					<!-- path-to-javac
-					<executable>  
-					</executable>
-					-->
+					<!-- path-to-javac <executable> </executable> -->
 					<source>1.7</source>
 					<target>1.7</target>
 					<compilerVersion>1.7</compilerVersion>
 				</configuration>
 			</plugin>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -43,14 +43,14 @@
 			<version>2.6.1</version>
 			<scope>compile</scope>
 		</dependency>
-		 
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.6</version>
 		</dependency>
-		 
-		
+
+
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
@@ -64,7 +64,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		<!-- Spring Dependencies -->		
+		<!-- Spring Dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -98,15 +98,15 @@
 								<goals>
 									<goal>java</goal>
 								</goals>
-								
+
 								<configuration>
 									<mainClass>com.bp.bs.BookServer</mainClass>
-								    <systemProperties>
-							            <systemProperty>
-							              <key>catalina.base</key>
-							              <value>"."</value>
-							            </systemProperty>
-								    </systemProperties>								    
+									<systemProperties>
+										<systemProperty>
+											<key>catalina.base</key>
+											<value>"."</value>
+										</systemProperty>
+									</systemProperties>
 								</configuration>
 							</execution>
 						</executions>
