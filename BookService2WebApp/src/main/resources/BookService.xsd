@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://bp.com/bs"
+	xmlns:tns="http://bp.com/bs" elementFormDefault="qualified">
+	<element name="book">
+		<complexType>
+			<sequence>
+				<element name="isbn" type="string"></element>
+				<element name="title" type="string"></element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="books">
+		<complexType>
+			<sequence>
+				<element ref="tns:book" minOccurs="0" maxOccurs="unbounded">
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="reviews">
+		<complexType>
+			<sequence>
+				<element ref="tns:reviewRef" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="reviewRef">
+		<complexType>
+			<sequence>
+				<element name="summary" type="string"></element>
+				<element name="url" type="anyURI"></element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="review">
+		<complexType>
+			<sequence>
+				<element name="by" type="string"></element>
+				<element name="text" type="string"></element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
