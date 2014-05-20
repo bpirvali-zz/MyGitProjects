@@ -29,10 +29,11 @@ import org.springframework.stereotype.Service;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
-@Api( value = "/Books", description = "Manage books" )
+@Api( value = "/books", description = "Manage books" )
 @Service("bookResourceImpl")
 @Path("/books")
 public class BookResourceImpl implements BookResource {
@@ -43,13 +44,45 @@ public class BookResourceImpl implements BookResource {
 	private Request request;
 	@Context
 	private UriInfo uriInfo;
-
 	
-	@ApiOperation(value="", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
-	@ApiResponses(value= {@ApiResponse(code=400, message="Bad Request")})		
-	@Produces({"application/json","application/xml"})
+//	@GET
+//	@ApiOperation(value="List matching books", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
+//	@ApiResponses(value= {@ApiResponse(code=200, message="Books found")})		
+//	@Produces({"application/json","application/xml"})
+//	//@ElementClass(response = BooksState.class)
+//	@ElementClass(response = List.class)
+//	public Response searchBooks(
+//			@ApiParam( value = "Search for books containing this keyword", required = false ) 
+//			@QueryParam("keyword") String keyword, 
+//			@ApiParam( value = "Search for books with this publication date", required = false )
+//			@QueryParam("pubdate") String pubDate) {
+//		logger.trace("Entered searchBooks(...) ");
+//		List<Book> books = BooksDB.getInstance().searchBooks(keyword, pubDate);
+//		BooksState result = new BooksState();
+//		for (Book book : books) {
+//			BookState st = new BookState();
+//			st.setIsbn(book.getIsbn());
+//			st.setTitle(book.getTitle());
+//			result.getBook().add(st);
+//		}
+//		//ResponseBuilder builder = Response.ok(result);
+//		ResponseBuilder builder = Response.ok();
+//		builder.entity(result.getBook());
+//		//CacheController.setExpiry(builder);
+//		return builder.build();
+//	}
+
 	@GET
-	public Response searchBooks(@QueryParam("keyword") String keyword, @QueryParam("pubdate") String pubDate) {
+	@ApiOperation(value="List matching books", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Books found")})		
+	@Produces({"application/json","application/xml"})
+	@ElementClass(response = BooksState.class)
+	//@ElementClass(response = List.class)
+	public Response searchBooks(
+			@ApiParam( value = "Search for books containing this keyword", required = false ) 
+			@QueryParam("keyword") String keyword, 
+			@ApiParam( value = "Search for books with this publication date", required = false )
+			@QueryParam("pubdate") String pubDate) {
 		logger.trace("Entered searchBooks(...) ");
 		List<Book> books = BooksDB.getInstance().searchBooks(keyword, pubDate);
 		BooksState result = new BooksState();
@@ -60,14 +93,15 @@ public class BookResourceImpl implements BookResource {
 			result.getBook().add(st);
 		}
 		ResponseBuilder builder = Response.ok(result);
+		//ResponseBuilder builder = Response.ok();
+		//builder.entity(result.getBook());
 		//CacheController.setExpiry(builder);
 		return builder.build();
 	}
-
+	
 	@GET
 	@Path("/{isbn}")
-	@Produces("application/xml")
-	//@Produces("application/json")
+	@Produces({"application/json","application/xml"})
 	@ElementClass(response = BookState.class)
 	public Response get(@PathParam("isbn") String isbn) {
 		BooksDB bdb = BooksDB.getInstance();

@@ -14,6 +14,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 
 /**
  * <p>Java class for book element declaration.
@@ -42,11 +45,15 @@ import javax.xml.bind.annotation.XmlType;
     "isbn",
     "title"
 })
+@ApiModel( value = "book", description = "Book resource representation" )
 @XmlRootElement(name = "book")
 public class BookState {
 
+    @ApiModelProperty( value = "book's ISBN", required = true ) 
     @XmlElement(required = true)
     protected String isbn;
+
+    @ApiModelProperty( value = "book's Title", required = true ) 
     @XmlElement(required = true)
     protected String title;
 

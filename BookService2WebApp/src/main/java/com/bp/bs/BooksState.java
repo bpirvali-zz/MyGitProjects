@@ -10,10 +10,14 @@ package com.bp.bs;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
 
 /**
@@ -39,12 +43,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "book"
+    "books"
 })
 @XmlRootElement(name = "books")
+@ApiModel( value = "BooksState", description = "Books resource representation" )
 public class BooksState {
-
-    protected List<BookState> book;
+	@ApiModelProperty( value = "Lists of Books", required = true )  protected List<BookState> books;
 
     /**
      * Gets the value of the book property.
@@ -69,10 +73,10 @@ public class BooksState {
      * 
      */
     public List<BookState> getBook() {
-        if (book == null) {
-            book = new ArrayList<BookState>();
+        if (books == null) {
+            books = new ArrayList<BookState>();
         }
-        return this.book;
+        return this.books;
     }
 
 }
