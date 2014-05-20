@@ -27,6 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
+
+@Api( value = "/Books", description = "Manage books" )
 @Service("bookResourceImpl")
 @Path("/books")
 public class BookResourceImpl implements BookResource {
@@ -38,6 +44,10 @@ public class BookResourceImpl implements BookResource {
 	@Context
 	private UriInfo uriInfo;
 
+	
+	@ApiOperation(value="", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
+	@ApiResponses(value= {@ApiResponse(code=400, message="Bad Request")})		
+	@Produces({"application/json","application/xml"})
 	@GET
 	public Response searchBooks(@QueryParam("keyword") String keyword, @QueryParam("pubdate") String pubDate) {
 		logger.trace("Entered searchBooks(...) ");

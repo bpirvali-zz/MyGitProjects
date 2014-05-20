@@ -23,6 +23,31 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 		 -->
 		<jaxrs:serviceBeans>
 			<ref bean="bookResourceImpl" />
+            <ref bean="swaggerResourceJSON" />
 		</jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean id="resourceWriter"
+                  class="com.wordnik.swagger.jaxrs.listing.ResourceListingProvider" />
+            <bean id="apiWriter"
+                  class="com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider" />
+        </jaxrs:providers>
 	</jaxrs:server>
+	
+	
+  <!-- Swagger API listing resource -->
+    <bean id="swaggerResourceJSON"
+          class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
+
+    <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
+        <property name="resourcePackage" value="com.bp.bs" />
+        <property name="version" value="1.0.0" />
+        <property name="basePath" value="http://localhost:8080/bs" />
+        <property name="title" value="Books Management Services" />
+        <property name="description" value="Books Management Services Description" />
+        <property name="contact" value="bpirvali@gmail.com" />
+        <property name="license" value="Apache Licensed" />
+        <property name="licenseUrl" value="apache.org" />
+        <property name="scan" value="true" />
+    </bean>	
+	
 </beans>
