@@ -41,7 +41,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
     <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
         <property name="resourcePackage" value="com.bp.bs" />
         <property name="version" value="1.0.0" />
-        <property name="basePath" value="http://localhost:8080/bs" />
+        <property name="basePath" value="http://localhost:8080/bs/rest" />
         <property name="title" value="Books Management Services" />
         <property name="description" value="Books Management Services Description" />
         <property name="contact" value="bpirvali@gmail.com" />
