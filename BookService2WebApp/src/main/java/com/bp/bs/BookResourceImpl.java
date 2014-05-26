@@ -1,5 +1,6 @@
 package com.bp.bs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -45,55 +46,31 @@ public class BookResourceImpl implements BookResource {
 	@Context
 	private UriInfo uriInfo;
 	
-//	@GET
-//	@ApiOperation(value="List matching books", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
-//	@ApiResponses(value= {@ApiResponse(code=200, message="Books found")})		
-//	@Produces({"application/json","application/xml"})
-//	//@ElementClass(response = BooksState.class)
-//	@ElementClass(response = List.class)
-//	public Response searchBooks(
-//			@ApiParam( value = "Search for books containing this keyword", required = false ) 
-//			@QueryParam("keyword") String keyword, 
-//			@ApiParam( value = "Search for books with this publication date", required = false )
-//			@QueryParam("pubdate") String pubDate) {
-//		logger.trace("Entered searchBooks(...) ");
-//		List<Book> books = BooksDB.getInstance().searchBooks(keyword, pubDate);
-//		BooksState result = new BooksState();
-//		for (Book book : books) {
-//			BookState st = new BookState();
-//			st.setIsbn(book.getIsbn());
-//			st.setTitle(book.getTitle());
-//			result.getBook().add(st);
-//		}
-//		//ResponseBuilder builder = Response.ok(result);
-//		ResponseBuilder builder = Response.ok();
-//		builder.entity(result.getBook());
-//		//CacheController.setExpiry(builder);
-//		return builder.build();
-//	}
-
 	@GET
 	@ApiOperation(value="List matching books", notes="Gets a list of all books matching the search parms!", response = BooksState.class )
 	@ApiResponses(value= {@ApiResponse(code=200, message="Books found")})		
 	@Produces({"application/json","application/xml"})
-	@ElementClass(response = BooksState.class)
-	//@ElementClass(response = List.class)
+	//@ElementClass(response = BooksState.class)
+	@ElementClass(response = List.class)
 	public Response searchBooks(
 			@ApiParam( value = "Search for books containing this keyword", required = false ) 
 			@QueryParam("keyword") String keyword, 
 			@ApiParam( value = "Search for books with this publication date", required = false )
 			@QueryParam("pubdate") String pubDate) {
 		logger.trace("Entered searchBooks(...) ");
-		List<Book> books = BooksDB.getInstance().searchBooks(keyword, pubDate);
-		BooksState result = new BooksState();
-		for (Book book : books) {
+		List<Book> booksFullObjs = BooksDB.getInstance().searchBooks(keyword, pubDate);
+		List<BookState> books = new ArrayList<BookState>();
+		
+//		BooksState result = new BooksState();
+		for (Book book : booksFullObjs) {
 			BookState st = new BookState();
 			st.setIsbn(book.getIsbn());
 			st.setTitle(book.getTitle());
-			result.getBook().add(st);
+			books.add(st);
 		}
-		ResponseBuilder builder = Response.ok(result);
-		//ResponseBuilder builder = Response.ok();
+		
+                 		//ResponseBuilder builder = Response.ok(result);
+		ResponseBuilder builder = Response.ok(books);
 		//builder.entity(result.getBook());
 		//CacheController.setExpiry(builder);
 		return builder.build();
