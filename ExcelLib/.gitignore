@@ -1,2 +1,6 @@
 /dist
 /.springBeans
+/target
+/.settings
+/.classpath
+/.project
