@@ -1,1 +1,8 @@
 /_._
+/target
+/.classpath
+/.project
+/dist
+/.springBeans
+/.settings
+

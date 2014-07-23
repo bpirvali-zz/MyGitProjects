@@ -20,7 +20,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>3.1</version>
 				<configuration>
 					<verbose>true</verbose>
 					<fork>true</fork>
@@ -41,6 +41,7 @@
 					<!-- <suiteXmlFiles> <suiteXmlFile>testng.xml</suiteXmlFile> </suiteXmlFiles> -->
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</build>
 	<dependencies>
