@@ -18,8 +18,8 @@ public class PersonController {
 	@RequestMapping(value="/addPerson", method=RequestMethod.POST) 
 	public String addPerson(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname, Model model) {
 		Person p = new Person();
-		p.setFirstname(firstname);
-		p.setLastname(lastname);
+		p.setFirst_name(firstname);
+		p.setLast_name(lastname);
 		
 		myDAO.addPerson(p);
 		

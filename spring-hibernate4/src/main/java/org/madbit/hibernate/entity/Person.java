@@ -12,33 +12,33 @@ public class Person {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int pid;
+	private int id;
 	
-	private String firstname;
+	private String first_name;
 	
-	private String lastname;
+	private String last_name;
 
-	public int getPid() {
-		return pid;
+	public int getId() {
+		return id;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setId(int pid) {
+		this.id = pid;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirst_name() {
+		return first_name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirst_name(String firstname) {
+		this.first_name = firstname;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLast_name() {
+		return last_name;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLast_name(String lastname) {
+		this.last_name = lastname;
 	}
 }
