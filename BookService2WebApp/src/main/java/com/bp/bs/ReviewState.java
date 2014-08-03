@@ -14,6 +14,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 
 /**
  * <p>Java class for review element declaration.
@@ -42,11 +45,15 @@ import javax.xml.bind.annotation.XmlType;
     "by",
     "text"
 })
+@ApiModel( value = "reviews", description = "review resource representation" )
 @XmlRootElement(name = "review")
 public class ReviewState {
 
+    @ApiModelProperty( value = "review's author", required = false ) 
     @XmlElement(required = true)
     protected String by;
+
+    @ApiModelProperty( value = "review's text", required = false ) 
     @XmlElement(required = true)
     protected String text;
 

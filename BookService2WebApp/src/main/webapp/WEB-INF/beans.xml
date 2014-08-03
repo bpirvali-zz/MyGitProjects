@@ -53,12 +53,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<util:map id="jsonNamespaceMap" map-class="java.util.Hashtable">
 		<entry key="http://bp.com/bs" value="" />
 	</util:map>
-	-->
 	
 	<util:list id="jsonKeys">
 		<value>books</value>
-		<!-- <value>book</value> -->
 	</util:list>
+	-->
 	<!-- Swagger API listing resource -->
 	<bean id="swaggerResourceJSON"
 		class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
@@ -74,5 +73,4 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="licenseUrl" value="apache.org" />
 		<property name="scan" value="true" />
 	</bean>
-
 </beans>

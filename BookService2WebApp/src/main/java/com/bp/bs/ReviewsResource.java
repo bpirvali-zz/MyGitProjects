@@ -10,6 +10,14 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
+
+//@Api( value = "", description = "Book's sub-resource: Manages book's reviews" )
+@Api( value = "", description = "" )
 public class ReviewsResource {
 	//@Context private UriInfo uriInfo;
 	private Book book;
@@ -19,6 +27,8 @@ public class ReviewsResource {
 	}
 
 	@GET
+	@ApiOperation(value="Get the reviews for the Book with ISBN", notes="ReviewsResource (book's sub-resource): Get the reviews for the Book with ISBN!", response = ReviewsState.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Reviews found!"), @ApiResponse(code=404, message="Book not found!")})			
 	public Response getReviews(@Context UriInfo uriInfo) {
 		ReviewsState result = new ReviewsState();
 		int index = 0;
@@ -36,9 +46,13 @@ public class ReviewsResource {
 		return builder.build();
 	}
 
-	@Path("{index}")
+	@Path("/{index}")
 	@GET
-	public Response getReview(@PathParam("index") int index) {
+	@ApiOperation(value="Get the review details for the review-id", notes="ReviewsResource (book's sub-resource): Get the review details for the review-id!", response = ReviewsState.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="review found"), @ApiResponse(code=404, message="review not found")})		
+	public Response getReview(
+			@ApiParam( value = "Review-ID", required = true ) 			
+			@PathParam("index") int index) {
 		try {
 			Review review = book.getReviews().get(index);
 			ReviewState st = new ReviewState();

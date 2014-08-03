@@ -68,8 +68,6 @@ public class BookResourceImpl implements BookResource {
 			st.setTitle(book.getTitle());
 			books.add(st);
 		}
-		
-                 		//ResponseBuilder builder = Response.ok(result);
 		ResponseBuilder builder = Response.ok(books);
 		//builder.entity(result.getBook());
 		//CacheController.setExpiry(builder);
@@ -78,9 +76,13 @@ public class BookResourceImpl implements BookResource {
 	
 	@GET
 	@Path("/{isbn}")
+	@ApiOperation(value="Get the Book with ISBN", notes="Get the Book with ISBN!", response = BookState.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Book found"), @ApiResponse(code=404, message="Book not found!")})		
 	@Produces({"application/json","application/xml"})
 	@ElementClass(response = BookState.class)
-	public Response get(@PathParam("isbn") String isbn) {
+	public Response get(
+			@ApiParam( value = "Book's ISBN", required = true )
+			@PathParam("isbn") String isbn) {
 		BooksDB bdb = BooksDB.getInstance();
 		Book b = bdb.getBook(isbn);
 		if (b != null) {
@@ -110,7 +112,9 @@ public class BookResourceImpl implements BookResource {
 
 	@PUT
 	@Path("/{isbn}")
-	@Consumes("application/xml")
+	@ApiOperation(value="Update the Book with ISBN", notes="Update the Book with ISBN!", response = Response.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Book updated!"), @ApiResponse(code=404, message="Book not found!")})			
+	@Consumes({"application/json","application/xml"})
 	@Produces("application/octet-stream")
 	@ElementClass(request = BookState.class)
 	public Response update(@PathParam("isbn") String isbn, BookState st) {
@@ -123,7 +127,9 @@ public class BookResourceImpl implements BookResource {
 	}
 
 	@POST
-	@Consumes("application/xml")
+	@ApiOperation(value="Add book", notes="Add book!", response = BookState.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Book created!")})			
+	@Consumes({"application/json","application/xml"})
 	@Produces("application/octet-stream")
 	@ElementClass(request = BookState.class)
 	public Response add(BookState st) {
@@ -138,6 +144,8 @@ public class BookResourceImpl implements BookResource {
 
 	@DELETE
 	@Path("/{isbn}")
+	@ApiOperation(value="Delete the Book with ISBN", notes="Delete the Book with ISBN!", response = Response.class )
+	@ApiResponses(value= {@ApiResponse(code=200, message="Book deleted!"), @ApiResponse(code=404, message="Book not found!")})			
 	@Produces("application/octet-stream")
 	public Response delete(@PathParam("isbn") String isbn) {
 		BooksDB bdb = BooksDB.getInstance();
@@ -149,6 +157,9 @@ public class BookResourceImpl implements BookResource {
 	}
 
 	@Path("/{isbn}/reviews")
+	//@ApiOperation(value="Get the reviews for the Book with ISBN", notes="Get the reviews for the Book with ISBN!", response = ReviewsState.class )
+	//@ApiResponses(value= {@ApiResponse(code=200, message="Reviews found!"), @ApiResponse(code=404, message="Book not found!")})			
+	@Produces({"application/json","application/xml"})
 	public ReviewsResource getReviewsResource(@PathParam("isbn") String isbn) {
 		BooksDB bookDB = BooksDB.getInstance();
 		Book book = bookDB.getBook(isbn);

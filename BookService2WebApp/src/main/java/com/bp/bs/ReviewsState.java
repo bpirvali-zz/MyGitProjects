@@ -15,6 +15,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 
 /**
  * <p>Java class for reviews element declaration.
@@ -41,9 +44,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "reviewRef"
 })
+@ApiModel( value = "reviews", description = "reviews resource representation" )
 @XmlRootElement(name = "reviews")
 public class ReviewsState {
 
+    @ApiModelProperty( value = "List of reviews", required = false ) 
     protected List<ReviewRef> reviewRef;
 
     /**
