@@ -3,6 +3,7 @@ package com.bp.bs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -74,6 +75,7 @@ public class BookResourceImpl implements BookResource {
 		return builder.build();
 	}
 	
+	@Valid
 	@GET
 	@Path("/{isbn}")
 	@ApiOperation(value="Get the Book with ISBN", notes="Get the Book with ISBN!", response = BookState.class )

@@ -18,6 +18,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	<jaxrs:server id="restContainer" address="/">
 		<!-- <jaxrs:features> <cxf:logging/> </jaxrs:features> -->
+
+		<jaxrs:inInterceptors>
+			<ref bean="validationInInterceptor" />
+		</jaxrs:inInterceptors>
+
+		<jaxrs:outInterceptors>
+			<ref bean="validationOutInterceptor" />
+		</jaxrs:outInterceptors>
+
 		<jaxrs:serviceBeans>
 			<ref bean="bookResourceImpl" />
 			<ref bean="swaggerResourceJSON" />
@@ -29,35 +38,43 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			<bean id="apiWriter"
 				class="com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider" />
 			<ref bean="jsonProvider" />
+			<ref bean="exceptionMapper"/>
 		</jaxrs:providers>
 	</jaxrs:server>
 
-<!-- 	<bean id="jsonProvider" class="org.eclipse.persistence.jaxb.rs.MOXyJsonProvider" /> -->
+	<bean id="exceptionMapper"
+		class="org.apache.cxf.jaxrs.validation.ValidationExceptionMapper" />
+	<bean id="validationProvider" class="org.apache.cxf.validation.BeanValidationProvider" />
+	<bean id="validationInInterceptor"
+		class="org.apache.cxf.jaxrs.validation.JAXRSBeanValidationInInterceptor">
+		<property name="provider" ref="validationProvider" />
+	</bean>
+	<bean id="validationOutInterceptor"
+		class="org.apache.cxf.jaxrs.validation.JAXRSBeanValidationOutInterceptor">
+		<property name="provider" ref="validationProvider" />
+	</bean>
 
-<!--    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/> -->
-   <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-   
-<!-- 	<bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"> -->
-<!-- 		 <property name="namespaceMap" ref="jsonNamespaceMap" />  -->
-<!-- 		<property name="supportUnwrapped" value="true" /> -->
-<!-- 		<property name="dropRootElement" value="true" /> -->
-<!-- 		<property name="dropCollectionWrapperElement" value="true" /> -->
-		
-<!-- 		<property name="serializeAsArray" value="true" /> -->
-<!-- 		<property name="arrayKeys" ref="jsonKeys"/> -->
-		
-<!-- 		<property name="ignoreNamespaces" value="true" /> -->
-<!-- 	</bean> -->
-	
-	<!-- 
-	<util:map id="jsonNamespaceMap" map-class="java.util.Hashtable">
-		<entry key="http://bp.com/bs" value="" />
-	</util:map>
-	
-	<util:list id="jsonKeys">
-		<value>books</value>
-	</util:list>
-	-->
+	<!-- <bean id="jsonProvider" class="org.eclipse.persistence.jaxb.rs.MOXyJsonProvider" 
+		/> -->
+
+	<!-- <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/> -->
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+
+	<!-- <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"> -->
+	<!-- <property name="namespaceMap" ref="jsonNamespaceMap" /> -->
+	<!-- <property name="supportUnwrapped" value="true" /> -->
+	<!-- <property name="dropRootElement" value="true" /> -->
+	<!-- <property name="dropCollectionWrapperElement" value="true" /> -->
+
+	<!-- <property name="serializeAsArray" value="true" /> -->
+	<!-- <property name="arrayKeys" ref="jsonKeys"/> -->
+
+	<!-- <property name="ignoreNamespaces" value="true" /> -->
+	<!-- </bean> -->
+
+	<!-- <util:map id="jsonNamespaceMap" map-class="java.util.Hashtable"> <entry 
+		key="http://bp.com/bs" value="" /> </util:map> <util:list id="jsonKeys"> 
+		<value>books</value> </util:list> -->
 	<!-- Swagger API listing resource -->
 	<bean id="swaggerResourceJSON"
 		class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />

@@ -8,11 +8,14 @@
 
 package com.bp.bs;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
@@ -49,10 +52,13 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 @XmlRootElement(name = "book")
 public class BookState {
 
+    @NotNull
     @ApiModelProperty( value = "book's ISBN", required = true ) 
     @XmlElement(required = true)
     protected String isbn;
 
+    @NotNull
+    @Length( min = 5, max = 255 )
     @ApiModelProperty( value = "book's Title", required = true ) 
     @XmlElement(required = true)
     protected String title;
