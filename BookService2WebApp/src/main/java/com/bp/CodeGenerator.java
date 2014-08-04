@@ -1,5 +1,6 @@
 package com.bp;
 
+/*
 import com.sun.tools.xjc.XJCFacade;
 
 public class CodeGenerator {
@@ -10,3 +11,4 @@ public class CodeGenerator {
 				"src/main/resources/BookService.xsd" });
 	}
 }
+*/
